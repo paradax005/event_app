@@ -95,7 +95,7 @@ class LoginTextForm extends StatelessWidget {
                       ? Icons.remove_red_eye_outlined
                       : Icons.remove_red_eye,
                 ),
-                color: theme.highlightColor,
+                color: appPrimaryColor,
                 onPressed: setVisibility,
               )
             : null,

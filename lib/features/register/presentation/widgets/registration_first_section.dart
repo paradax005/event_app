@@ -9,7 +9,7 @@ class RegistrationFirstSection extends StatelessWidget {
     required this.userNameController,
     required this.firstNameController,
     required this.lastNameController,
-    required this.emailNameController,
+    required this.emailController,
     required this.nextButton,
     required this.formKey,
     required this.autoValidate,
@@ -19,7 +19,7 @@ class RegistrationFirstSection extends StatelessWidget {
   final TextEditingController userNameController;
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
-  final TextEditingController emailNameController;
+  final TextEditingController emailController;
   final void Function() nextButton;
   final GlobalKey formKey;
   final bool autoValidate;
@@ -62,7 +62,7 @@ class RegistrationFirstSection extends StatelessWidget {
             const SizedBox(height: 10),
             LoginTextFormBloc(
               hint: LocaleKeys.auth_hint_email.tr(),
-              controller: emailNameController,
+              controller: emailController,
               title: LocaleKeys.auth_email.tr(),
               isNotEmail: false,
             ),

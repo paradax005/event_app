@@ -1,5 +1,5 @@
 import 'package:event_app/core/routes/app_routes.dart';
-import 'package:event_app/features/login/presentation/login_ui.dart';
+import 'package:event_app/features/login/presentation/widgets/login_ui.dart';
 import 'package:event_app/global/views/gradient_background.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

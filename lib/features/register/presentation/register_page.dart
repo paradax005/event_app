@@ -1,7 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:event_app/features/register/presentation/widgets/registration_first_section.dart';
-import 'package:event_app/features/register/presentation/widgets/registration_second_section.dart';
-import 'package:event_app/global/translation/generated/locale_keys.g.dart';
+import 'package:event_app/features/register/presentation/widgets/register_ui.dart';
 import 'package:event_app/global/views/gradient_background.dart';
 import 'package:flutter/material.dart';
 
@@ -79,7 +76,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       body: GradientBackground(
         child: SafeArea(
@@ -100,44 +96,32 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
-                Align(
-                  child: Text(
-                    LocaleKeys.auth_sign_up.tr(),
-                    style: theme.textTheme.titleLarge,
-                  ),
-                ),
                 Expanded(
-                  child: PageView(
-                    controller: _pageController,
-                    children: [
-                      RegistrationFirstSection(
-                        userNameController: _userNameController,
-                        firstNameController: _firstNameController,
-                        lastNameController: _lastNameController,
-                        emailNameController: _emailController,
-                        autoValidate: _autoValidateFirstForm,
-                        nextButton: () {
-                          _pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.ease,
-                          );
-                        },
-                        formKey: firstFormKey,
-                      ),
-                      RegistrationSecondSection(
-                        passwordController: _passwordController,
-                        confirmPasswordController: _confirmPasswordController,
-                        confirmButton: () {},
-                        formKey: secondFormKey,
-                        autoValidate: _autoValidateSecondForm,
-                        showPassword: _obscurePassword,
-                        showConfirmPassword: _obscureConfirmPassword,
-                        setVisibility: setPasswordVisibility,
-                      ),
-                    ],
+                  child: RegisterUi(
+                    pageController: _pageController,
+                    userNameController: _userNameController,
+                    firstNameController: _firstNameController,
+                    lastNameController: _lastNameController,
+                    emailController: _emailController,
+                    nextButton: () {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.ease,
+                      );
+                    },
+                    firstFormKey: firstFormKey,
+                    firstAutoValidate: _autoValidateFirstForm,
+                    passwordController: _passwordController,
+                    showPassword: _obscurePassword,
+                    confirmPasswordController: _confirmPasswordController,
+                    showConfirmPassword: _obscureConfirmPassword,
+                    confirmButton: confirmButton,
+                    secondFormKey: secondFormKey,
+                    autoValidateSecondForm: _autoValidateSecondForm,
+                    setVisibility: setPasswordVisibility,
                   ),
                 ),
+                const SizedBox(height: 30),
               ],
             ),
           ),
