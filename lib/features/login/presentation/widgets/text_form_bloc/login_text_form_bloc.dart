@@ -15,6 +15,7 @@ class LoginTextFormBloc extends StatelessWidget {
     this.setVisibility,
     this.prefixIcon,
     super.key,
+    this.readOnly,
   });
 
   final String hint;
@@ -24,6 +25,7 @@ class LoginTextFormBloc extends StatelessWidget {
   final bool? isNotEmail;
   final String title;
   final bool? isPassword;
+  final bool? readOnly;
   final VoidCallback? setVisibility;
   final Widget? prefixIcon;
 
@@ -44,6 +46,7 @@ class LoginTextFormBloc extends StatelessWidget {
             isPassword: isPassword,
             setVisibility: setVisibility,
             prefixIcon: prefixIcon,
+            readOnly: readOnly,
           ),
         ],
       ),

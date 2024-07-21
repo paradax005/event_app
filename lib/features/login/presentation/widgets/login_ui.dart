@@ -105,7 +105,7 @@ class LoginUi extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

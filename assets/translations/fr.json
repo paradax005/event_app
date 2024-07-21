@@ -2,6 +2,8 @@
   "app_name": "Event App",
   "next": "NEXT",
   "finish": "FINISH",
+  "cancel": "Cancel",
+  "choose": "Choose",
   "auth" : {
     "username" : "User Name",
     "email" : "Email Address",

@@ -45,16 +45,40 @@ class _LoginScreenState extends State<LoginPage> {
       body: GradientBackground(
         child: SafeArea(
           child: SingleChildScrollView(
-            child: LoginUi(
-              emailController: emailController,
-              passwordController: passwordController,
-              obscurePassword: _obscureText,
-              setVisibility: setPasswordVisibility,
-              autoValidate: _autoValidate,
-              formKey: formKey,
-              login: () => _login(context),
-              goToForgotPassword: () => _navigateToForgotPassword(context),
-              goToRegister: () => _navigateToRegister(context),
+            child: Stack(
+              children: [
+                LoginUi(
+                  emailController: emailController,
+                  passwordController: passwordController,
+                  obscurePassword: _obscureText,
+                  setVisibility: setPasswordVisibility,
+                  autoValidate: _autoValidate,
+                  formKey: formKey,
+                  login: () => _login(context),
+                  goToForgotPassword: () => _navigateToForgotPassword(context),
+                  goToRegister: () => _navigateToRegister(context),
+                ),
+                Positioned(
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          emailController.text = 'aziz.issaoui@esprit.tn';
+                          passwordController.text = 'random-password';
+                        },
+                        icon: const Icon(Icons.filter_list_alt),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          emailController.clear();
+                          passwordController.clear();
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -69,6 +93,8 @@ class _LoginScreenState extends State<LoginPage> {
     if (formKey.currentState?.validate() ?? false) {
       final email = emailController.text;
       final password = passwordController.text;
+
+      Navigator.of(context).pushReplacementNamed(homePage);
 
       if (kDebugMode) {
         print('email value here : $email');

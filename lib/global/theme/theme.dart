@@ -14,7 +14,7 @@ const geryInputLoginBorderColor = Color(0xFFDDDDDD);
 const geryInputLoginBackGroundColor = Color(0xFFF4F8FA);
 const geryInputLoginInnerShadowColor = Color(0xFFE2E7EB);
 const geryTextLoginInputColor = Color(0xFF111827);
-const redErrorLoginInputColor = Color(0xFFEB5757);
+const redErrorLoginInputColor = Color(0xFFEF1A1F);
 
 const buttonDarkTextColor = Color(0xFF1F2937);
 const checkBoxTextColor = Color(0xFF9CA3AF);

@@ -4,6 +4,8 @@ abstract class  LocaleKeys {
   static const app_name = 'app_name';
   static const next = 'next';
   static const finish = 'finish';
+  static const cancel = 'cancel';
+  static const choose = 'choose';
   static const auth_username = 'auth.username';
   static const auth_first_name = 'auth.first_name';
   static const auth_last_name = 'auth.last_name';

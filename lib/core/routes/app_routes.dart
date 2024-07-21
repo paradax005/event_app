@@ -1,3 +1,4 @@
+import 'package:event_app/features/home_tab/home_tab.dart';
 import 'package:event_app/features/login/presentation/login_page.dart';
 import 'package:event_app/features/register/presentation/register_page.dart';
 import 'package:event_app/global/views/page_under_construction.dart';
@@ -9,6 +10,7 @@ const String loginPage = '/';
 const String registerPage = 'register';
 const String forgotPassword = 'forgot-password';
 const String homePage = 'homePage';
+const String eventPage = 'eventPage';
 
 // controller function with switch statement to control page route flow
 Route<dynamic> controller(RouteSettings settings) {
@@ -21,6 +23,11 @@ Route<dynamic> controller(RouteSettings settings) {
     case registerPage:
       return _pageBuilder(
         (_) => const RegisterPage(),
+        settings: settings,
+      );
+    case homePage:
+      return _pageBuilder(
+        (_) => const MainScreen(),
         settings: settings,
       );
     default:

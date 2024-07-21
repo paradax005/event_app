@@ -96,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 35),
                 Expanded(
                   child: RegisterUi(
                     pageController: _pageController,
@@ -121,7 +122,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     setVisibility: setPasswordVisibility,
                   ),
                 ),
-                const SizedBox(height: 30),
               ],
             ),
           ),

@@ -12,6 +12,7 @@ class LoginTextForm extends StatelessWidget {
     this.isPassword = false,
     this.setVisibility,
     this.prefixIcon,
+    this.readOnly,
   });
   final String hint;
   final TextEditingController controller;
@@ -19,6 +20,7 @@ class LoginTextForm extends StatelessWidget {
   final bool obscureText;
   final bool isNotEmail;
   final bool? isPassword;
+  final bool? readOnly;
   final VoidCallback? setVisibility;
   final Widget? prefixIcon;
 
@@ -87,6 +89,7 @@ class LoginTextForm extends StatelessWidget {
           color: redErrorLoginInputColor,
           height: 0.5,
         ),
+
         prefixIcon: prefixIcon,
         suffixIcon: (isPassword ?? false)
             ? IconButton(
@@ -102,6 +105,7 @@ class LoginTextForm extends StatelessWidget {
       ),
       validator: validateData,
       obscureText: obscureText,
+      readOnly: readOnly ?? false,
       keyboardType:
           isNotEmail ? TextInputType.text : TextInputType.emailAddress,
       controller: controller,
