@@ -5,7 +5,6 @@ import 'package:event_app/global/views/page_under_construction.dart';
 import 'package:flutter/material.dart';
 
 const String splashScreen = '/';
-const String settingsPage = 'settings';
 const String loginPage = '/';
 const String registerPage = 'register';
 const String forgotPassword = 'forgot-password';

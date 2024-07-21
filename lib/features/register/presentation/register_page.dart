@@ -48,6 +48,11 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {
       _autoValidateSecondForm = true;
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("your account has been created successfully"),
+      ),
+    );
   }
 
   @override

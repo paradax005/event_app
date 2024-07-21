@@ -7,10 +7,12 @@ class GlobalButton extends StatelessWidget {
     super.key,
     this.onPressed,
     this.backgroundColor,
+    this.textColor,
   });
 
   final void Function()? onPressed;
   final Color? backgroundColor;
+  final Color? textColor;
   final String textContent;
 
   @override
@@ -28,7 +30,7 @@ class GlobalButton extends StatelessWidget {
         child: Text(
           textContent,
           style: theme.textTheme.displaySmall?.copyWith(
-            color: Colors.white,
+            color: textColor ?? Colors.white,
           ),
         ),
       ),

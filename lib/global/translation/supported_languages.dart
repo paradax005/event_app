@@ -19,5 +19,5 @@ SupportedLanguageEasyLocalization
     getSupportedLanguageEasyLocalizationFromString(String language) =>
         SupportedLanguageEasyLocalization.values.firstWhere(
           (f) => f.name == language,
-          orElse: () => SupportedLanguageEasyLocalization.en,
+          orElse: () => SupportedLanguageEasyLocalization.fr,
         );

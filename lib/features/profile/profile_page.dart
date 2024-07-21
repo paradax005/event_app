@@ -1,4 +1,4 @@
-import 'package:event_app/core/routes/app_routes.dart';
+import 'package:event_app/features/profile/widgets/logout_bottom_sheet.dart';
 import 'package:event_app/features/profile/widgets/logout_button.dart';
 import 'package:event_app/features/profile/widgets/personal_details.dart';
 import 'package:event_app/features/profile/widgets/profile_header.dart';
@@ -57,8 +57,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   birthDateController: birthDateController,
                 ),
                 LogoutButton(
-                  logout: () {
-                    Navigator.of(context).pushReplacementNamed(loginPage);
+                  logout: () async {
+                    await showModalBottomSheet<void>(
+                      context: context,
+                      builder: (context) {
+                        return const LogoutBottomSheet();
+                      },
+                    );
                   },
                 ),
               ],

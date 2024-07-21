@@ -58,26 +58,26 @@ class _LoginScreenState extends State<LoginPage> {
                   goToForgotPassword: () => _navigateToForgotPassword(context),
                   goToRegister: () => _navigateToRegister(context),
                 ),
-                Positioned(
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          emailController.text = 'aziz.issaoui@esprit.tn';
-                          passwordController.text = 'random-password';
-                        },
-                        icon: const Icon(Icons.filter_list_alt),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          emailController.clear();
-                          passwordController.clear();
-                        },
-                        icon: const Icon(Icons.clear),
-                      ),
-                    ],
-                  ),
-                )
+                // Positioned(
+                //   child: Row(
+                //     children: [
+                //       IconButton(
+                //         onPressed: () {
+                //           emailController.text = 'aziz.issaoui@esprit.tn';
+                //           passwordController.text = 'random-password';
+                //         },
+                //         icon: const Icon(Icons.filter_list_alt),
+                //       ),
+                //       IconButton(
+                //         onPressed: () {
+                //           emailController.clear();
+                //           passwordController.clear();
+                //         },
+                //         icon: const Icon(Icons.clear),
+                //       ),
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),
@@ -91,17 +91,7 @@ class _LoginScreenState extends State<LoginPage> {
       _autoValidate = true;
     });
     if (formKey.currentState?.validate() ?? false) {
-      final email = emailController.text;
-      final password = passwordController.text;
-
       Navigator.of(context).pushReplacementNamed(homePage);
-
-      if (kDebugMode) {
-        print('email value here : $email');
-        print('password value here : $password');
-      }
-
-      // GO TO HOME SCREEN FOR NOW
     }
   }
 

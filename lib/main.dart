@@ -14,8 +14,8 @@ Future<void> main() async {
     EasyLocalization(
       path: translationPath,
       supportedLocales: [
-        Locale(SupportedLanguageEasyLocalization.en.name),
         Locale(SupportedLanguageEasyLocalization.fr.name),
+        Locale(SupportedLanguageEasyLocalization.en.name),
       ],
       fallbackLocale: Locale(SupportedLanguageEasyLocalization.en.name),
       assetLoader: const CodegenLoader(),
