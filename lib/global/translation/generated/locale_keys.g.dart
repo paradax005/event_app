@@ -28,5 +28,12 @@ abstract class  LocaleKeys {
   static const settings_english = 'settings.english';
   static const settings_french = 'settings.french';
   static const settings = 'settings';
+  static const server_credentials_exception = 'server.credentials_exception';
+  static const server_customer_exist_exception = 'server.customer_exist_exception';
+  static const server_internal_exception = 'server.internal_exception';
+  static const server_internet_exception = 'server.internet_exception';
+  static const server_unexpected_exception = 'server.unexpected_exception';
+  static const server_try_again = 'server.try_again';
+  static const server = 'server';
 
 }

@@ -28,5 +28,13 @@
   "settings": {
     "english": "English",
     "french": "French"
+  },
+  "server": {
+    "credentials_exception": "Invalid credentials.",
+    "customer_exist_exception": "User already exist.",
+    "internal_exception": "Oops! Something went wrong on our end. Please try again later.",
+    "internet_exception": "No internet connection. Please check your network settings and try again.",
+    "unexpected_exception": "An unexpected error occurred. Please try again later or contact support for assistance.",
+    "try_again": "Try Again"
   }
 }
