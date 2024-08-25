@@ -83,6 +83,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       'firstName': firstName,
       'lastName': lastName,
     };
+
+    print(requestBody);
     final response = await client
         .post(
           Uri.parse(signUpUrl),
@@ -92,6 +94,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         .catchError(
           (e) => throw ServerException(),
         );
+
+    print(response.body);
 
     if (response.statusCode == 201) {
       return unit;

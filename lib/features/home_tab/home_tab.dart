@@ -31,13 +31,7 @@ class _MainScreenState extends State<MainScreen> {
 
   // * List of screens that are displayed in the bottom navigation bar
 
-  final userTabs = const [
-    HomePage(),
-    Scaffold(backgroundColor: Colors.white, body: PageUnderConstruction()),
-    PurchasesScreen(),
-    ProfilePage(),
-  ];
-  final adminTabs = const [
+  final tabs = const [
     HomePage(),
     Scaffold(backgroundColor: Colors.white, body: PageUnderConstruction()),
     MyEventScreen(),
@@ -94,15 +88,14 @@ class _MainScreenState extends State<MainScreen> {
                             icon: SvgPicture.asset(MediaRes.exploreIcon),
                             label: 'Explore',
                           ),
-                          if (_userInfo.role != 'user')
-                            BottomNavigationBarItem(
-                              activeIcon: SvgPicture.asset(
-                                MediaRes.exploreIcon,
-                                height: 26,
-                              ),
-                              icon: SvgPicture.asset(MediaRes.exploreIcon),
-                              label: 'My Events',
+                          BottomNavigationBarItem(
+                            activeIcon: SvgPicture.asset(
+                              MediaRes.exploreIcon,
+                              height: 26,
                             ),
+                            icon: SvgPicture.asset(MediaRes.exploreIcon),
+                            label: 'My Events',
+                          ),
                           BottomNavigationBarItem(
                             activeIcon: SvgPicture.asset(
                               MediaRes.purchasesIcon,
@@ -136,8 +129,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       body: IndexedStack(
                         index: currentIndex,
-                        children:
-                            _userInfo.role != 'user' ? adminTabs : userTabs,
+                        children: tabs,
                       ),
                     ),
                   )

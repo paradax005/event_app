@@ -57,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
     BlocProvider.of<AuthBloc>(context).add(
       AuthSignUpEvent(
-        email: _emailController.text,
+        email: _emailController.text.toLowerCase().trim(),
         password: _passwordController.text,
         username: _userNameController.text,
         firstName: _firstNameController.text,
@@ -99,7 +99,11 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state is AuthSignUpFailureState) {
             AppSnackBar.showSnackBar(context, state.message);
           } else if (state is AuthSignUpSuccessState) {
-            Navigator.of(context).pushReplacementNamed(homePage);
+            AppSnackBar.showSuccessSnackBar(
+              context,
+              'Your account has been created successfully ',
+            );
+            Navigator.of(context).pushReplacementNamed(loginPage);
           }
         },
         builder: (context, state) {
@@ -127,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 55),
                       Expanded(
                         child: RegisterUi(
                           pageController: _pageController,

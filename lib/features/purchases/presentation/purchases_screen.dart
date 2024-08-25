@@ -24,15 +24,6 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
               style: theme.textTheme.displaySmall,
             ),
             centerTitle: true,
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: appPrimaryColor,
-              ),
-            ),
           ),
           body: Column(
             children: [
