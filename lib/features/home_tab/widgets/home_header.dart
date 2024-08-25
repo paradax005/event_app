@@ -1,5 +1,4 @@
 import 'package:event_app/global/theme/theme.dart';
-import 'package:event_app/global/utils/const.dart';
 import 'package:flutter/material.dart';
 
 class HomeHeader extends StatelessWidget {

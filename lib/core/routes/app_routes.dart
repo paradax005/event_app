@@ -1,20 +1,31 @@
+import 'package:event_app/features/event/presentation/add_new_event/add_new_event_page.dart';
 import 'package:event_app/features/forgot-password/presentation/forgot_password_screen.dart';
 import 'package:event_app/features/home_tab/home_tab.dart';
+import 'package:event_app/features/login/data/models/user_info.dart';
 import 'package:event_app/features/login/presentation/login_page.dart';
 import 'package:event_app/features/register/presentation/register_page.dart';
+import 'package:event_app/features/splash/presentation/splash_screen.dart';
+import 'package:event_app/features/support/pressentation/support_screen.dart';
 import 'package:event_app/global/views/page_under_construction.dart';
 import 'package:flutter/material.dart';
 
 const String splashScreen = '/';
-const String loginPage = '/';
+const String loginPage = '/login';
 const String registerPage = 'register';
 const String forgotPassword = 'forgot-password';
-const String homePage = 'homePage';
+const String homePage = '/homePage';
 const String eventPage = 'eventPage';
+const String addEventPage = 'add-eventPage';
+const String supportPage = 'supportPage';
 
 // controller function with switch statement to control page route flow
 Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
+    case splashScreen:
+      return _pageBuilder(
+        (_) => const SplashScreen(),
+        settings: settings,
+      );
     case loginPage:
       return _pageBuilder(
         (_) => const LoginPage(),
@@ -33,6 +44,16 @@ Route<dynamic> controller(RouteSettings settings) {
     case forgotPassword:
       return _pageBuilder(
         (_) => const ForgotPasswordScreen(),
+        settings: settings,
+      );
+    case supportPage:
+      return _pageBuilder(
+        (_) => const SupportScreen(),
+        settings: settings,
+      );
+    case addEventPage:
+      return _pageBuilder(
+        (_) => const AddNewEventPage(),
         settings: settings,
       );
     default:

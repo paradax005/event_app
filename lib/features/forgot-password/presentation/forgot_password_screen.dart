@@ -44,7 +44,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void initState() {
     super.initState();
     pageController = PageController();
-    emailController = TextEditingController(text: 'borhenn.fatnassi@gmail.com');
+    emailController = TextEditingController();
     resetCodeController = TextEditingController();
     newPasswordController = TextEditingController();
     confirmNewPasswordController = TextEditingController();

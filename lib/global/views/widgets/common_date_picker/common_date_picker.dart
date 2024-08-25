@@ -6,7 +6,6 @@ import 'package:event_app/global/translation/generated/locale_keys.g.dart';
 import 'package:event_app/global/utils/const.dart';
 import 'package:event_app/global/views/widgets/common_date_picker/common_text_form.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CommonDatePicker extends StatefulWidget {
@@ -34,7 +33,7 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
     required ThemeData theme,
   }) async {
     if (io.Platform.isIOS) {
-      await showCupertinoModalPopup(
+      await showCupertinoModalPopup<String>(
         context: context,
         builder: (_) => Center(
           child: Container(
@@ -167,9 +166,7 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
               ),
               colorScheme: const ColorScheme.light(
                 primary: appPrimaryColor,
-                onSurface: geryTextLoginInputColor, // body text color
-              ).copyWith(
-                background: globalBackgroundColor,
+                onSurface: geryTextLoginInputColor,
               ),
             ),
             child: child!,
@@ -196,6 +193,7 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
       prefixIcon: const Icon(
         Icons.date_range,
         color: appPrimaryColor,
+        size: 26,
       ),
       validateData: widget.validateData,
       onTap: () => _showDatePicker(

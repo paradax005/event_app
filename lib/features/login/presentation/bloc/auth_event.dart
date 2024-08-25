@@ -74,3 +74,18 @@ class UpdatePasswordEvent extends AuthEvent {
   @override
   List<Object?> get props => [email, newPassword];
 }
+
+class GetUserIsConnectedEvent extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class LogoutUserEvent extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetUserInfoEvent extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}

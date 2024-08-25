@@ -14,9 +14,12 @@ class LoginTextFormBloc extends StatelessWidget {
     this.isPassword = false,
     this.setVisibility,
     this.prefixIcon,
+    this.suffixIcon,
     super.key,
     this.readOnly,
     this.textInputType,
+    this.maxLine = 1,
+    this.minLine,
   });
 
   final String hint;
@@ -29,7 +32,10 @@ class LoginTextFormBloc extends StatelessWidget {
   final bool? readOnly;
   final VoidCallback? setVisibility;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final TextInputType? textInputType;
+  final int? maxLine;
+  final int? minLine;
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +54,11 @@ class LoginTextFormBloc extends StatelessWidget {
             isPassword: isPassword,
             setVisibility: setVisibility,
             prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
             readOnly: readOnly,
             textInputType: textInputType,
+            maxLine: maxLine,
+            minLine: minLine,
           ),
         ],
       ),

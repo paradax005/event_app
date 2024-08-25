@@ -1,5 +1,7 @@
 import 'package:event_app/features/home/data/models/event_model.dart';
+import 'package:event_app/global/theme/theme.dart';
 import 'package:event_app/global/views/widgets/global_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
@@ -59,9 +61,21 @@ class EventCard extends StatelessWidget {
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: GlobalButton(
-                onPressed: buyTicket,
-                textContent: 'Buy Ticket',
+              child: Row(
+                children: [
+                  Text(
+                    '29 TND',
+                    style: theme.textTheme.displayMedium
+                        ?.copyWith(color: successColor),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: GlobalButton(
+                      onPressed: buyTicket,
+                      textContent: 'Buy Ticket',
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

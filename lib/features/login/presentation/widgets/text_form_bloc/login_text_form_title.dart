@@ -1,4 +1,3 @@
-import 'package:event_app/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class LoginTextFormTitle extends StatelessWidget {

@@ -60,7 +60,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         );
 
     if (response.statusCode == 200) {
-      return '';
+      return response.body;
     } else if (response.statusCode == 400) {
       throw WrongCredentialException();
     } else {
@@ -83,6 +83,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       'firstName': firstName,
       'lastName': lastName,
     };
+
+    print(requestBody);
     final response = await client
         .post(
           Uri.parse(signUpUrl),
@@ -92,6 +94,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         .catchError(
           (e) => throw ServerException(),
         );
+
+    print(response.body);
 
     if (response.statusCode == 201) {
       return unit;
@@ -118,9 +122,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         .catchError(
           (e) => throw ServerException(),
         );
-
-    print(response.body);
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       return unit;
