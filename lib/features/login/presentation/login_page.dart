@@ -1,8 +1,12 @@
 import 'package:event_app/core/routes/app_routes.dart';
+import 'package:event_app/core/services/injection_container.dart';
+import 'package:event_app/features/login/presentation/bloc/auth_bloc.dart';
 import 'package:event_app/features/login/presentation/widgets/login_ui.dart';
 import 'package:event_app/global/views/gradient_background.dart';
+import 'package:event_app/global/views/widgets/app_snackbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -27,8 +31,8 @@ class _LoginScreenState extends State<LoginPage> {
 
   @override
   void initState() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
+    emailController = TextEditingController(text: 'borhenn.fatnassi@gmail.com');
+    passwordController = TextEditingController(text: 'azerty8188');
     super.initState();
   }
 
@@ -41,47 +45,63 @@ class _LoginScreenState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GradientBackground(
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                LoginUi(
-                  emailController: emailController,
-                  passwordController: passwordController,
-                  obscurePassword: _obscureText,
-                  setVisibility: setPasswordVisibility,
-                  autoValidate: _autoValidate,
-                  formKey: formKey,
-                  login: () => _login(context),
-                  goToForgotPassword: () => _navigateToForgotPassword(context),
-                  goToRegister: () => _navigateToRegister(context),
+    return BlocProvider<AuthBloc>(
+      create: (context) => sl<AuthBloc>(),
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSignInFailureState) {
+            AppSnackBar.showSnackBar(context, state.message);
+          } else if (state is AuthSignInSuccessState) {
+            Navigator.of(context).pushReplacementNamed(homePage);
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            body: GradientBackground(
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      LoginUi(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        obscurePassword: _obscureText,
+                        setVisibility: setPasswordVisibility,
+                        autoValidate: _autoValidate,
+                        formKey: formKey,
+                        login: () => _login(context),
+                        goToForgotPassword: () =>
+                            _navigateToForgotPassword(context),
+                        goToRegister: () => _navigateToRegister(context),
+                        isLoading: state is AuthLoadingState,
+                      ),
+                      Positioned(
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                emailController.text = 'aziz.issaoui@esprit.tn';
+                                passwordController.text = 'random-password';
+                              },
+                              icon: const Icon(Icons.filter_list_alt),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                emailController.clear();
+                                passwordController.clear();
+                              },
+                              icon: const Icon(Icons.clear),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                // Positioned(
-                //   child: Row(
-                //     children: [
-                //       IconButton(
-                //         onPressed: () {
-                //           emailController.text = 'aziz.issaoui@esprit.tn';
-                //           passwordController.text = 'random-password';
-                //         },
-                //         icon: const Icon(Icons.filter_list_alt),
-                //       ),
-                //       IconButton(
-                //         onPressed: () {
-                //           emailController.clear();
-                //           passwordController.clear();
-                //         },
-                //         icon: const Icon(Icons.clear),
-                //       ),
-                //     ],
-                //   ),
-                // )
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -91,7 +111,15 @@ class _LoginScreenState extends State<LoginPage> {
       _autoValidate = true;
     });
     if (formKey.currentState?.validate() ?? false) {
-      Navigator.of(context).pushReplacementNamed(homePage);
+      final authBloc = BlocProvider.of<AuthBloc>(context);
+      if (!authBloc.isClosed) {
+        authBloc.add(
+          AuthSignInEvent(
+            email: emailController.text.trim(),
+            password: passwordController.text,
+          ),
+        );
+      }
     }
   }
 

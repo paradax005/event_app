@@ -21,7 +21,16 @@ abstract class AuthRemoteDataSource {
 
   Future<Unit> restPassword({
     required String email,
-    required String languageCode,
+  });
+
+  Future<Unit> confirmResetCode({
+    required String email,
+    required String resetCode,
+  });
+
+  Future<Unit> updatePassword({
+    required String email,
+    required String newPassword,
   });
 }
 
@@ -30,15 +39,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     required this.client,
   });
   final http.Client client;
-
-  @override
-  Future<Unit> restPassword({
-    required String email,
-    required String languageCode,
-  }) {
-    // TODO: implement restPassword
-    throw UnimplementedError();
-  }
 
   @override
   Future<String> signIn({
@@ -97,6 +97,95 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       return unit;
     } else if (response.statusCode == 400) {
       throw UserExistException();
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<Unit> restPassword({
+    required String email,
+  }) async {
+    final requestBody = <String, dynamic>{
+      'email': email,
+    };
+    final response = await client
+        .post(
+          Uri.parse(forgotPasswordUrl),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(requestBody),
+        )
+        .catchError(
+          (e) => throw ServerException(),
+        );
+
+    print(response.body);
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      return unit;
+    } else if (response.statusCode == 404) {
+      throw UserNotFoundException();
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<Unit> confirmResetCode({
+    required String email,
+    required String resetCode,
+  }) async {
+    final requestBody = <String, dynamic>{
+      'email': email,
+      'resetCode': resetCode,
+    };
+    final response = await client
+        .post(
+          Uri.parse(verifyResetCodedUrl),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(requestBody),
+        )
+        .catchError(
+          (e) => throw ServerException(),
+        );
+
+    if (response.statusCode == 200) {
+      return unit;
+    } else if (response.statusCode == 400) {
+      throw InvalidResetCodeException();
+    } else if (response.statusCode == 404) {
+      throw UserNotFoundException();
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<Unit> updatePassword({
+    required String email,
+    required String newPassword,
+  }) async {
+    final requestBody = <String, dynamic>{
+      'email': email,
+      'newPassword': newPassword,
+    };
+    final response = await client
+        .put(
+          Uri.parse(resetPasswordUrl),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(requestBody),
+        )
+        .catchError(
+          (e) => throw ServerException(),
+        );
+
+    if (response.statusCode == 200) {
+      return unit;
+    } else if (response.statusCode == 400) {
+      throw ResetCodeNotVerifiedException();
+    } else if (response.statusCode == 404) {
+      throw UserNotFoundException();
     } else {
       throw ServerException();
     }

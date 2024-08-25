@@ -21,6 +21,7 @@ class RegisterUi extends StatelessWidget {
     required this.confirmButton,
     required this.secondFormKey,
     required this.autoValidateSecondForm,
+    required this.isLoading,
     super.key,
     this.setVisibility,
   });
@@ -47,6 +48,8 @@ class RegisterUi extends StatelessWidget {
   final Function confirmButton;
   final GlobalKey secondFormKey;
   final bool autoValidateSecondForm;
+
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +85,7 @@ class RegisterUi extends StatelessWidget {
                 showPassword: showPassword,
                 showConfirmPassword: showConfirmPassword,
                 setVisibility: setVisibility,
+                isLoading: isLoading,
               ),
             ],
           ),

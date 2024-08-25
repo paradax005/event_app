@@ -7,6 +7,8 @@ const blueTextColor = Color(0xFF1A6FEE);
 const titleBlackColor = Color(0xFF020202);
 const descriptionGreyColor = Color(0xFF8A929B);
 const labelBlackColor = Color(0xFF000000);
+const successColor = Color(0xFF4CAF50);
+//Color(0xFF6FCF97);
 
 ///login inputColors
 const geryHintLoginInputColor = Color(0xFFA4AFAF);
@@ -34,6 +36,7 @@ const descriptionTextColor = Color(0xFF596372);
 final ThemeData appGlobalTheme = ThemeData(
   useMaterial3: true,
   primaryColor: appPrimaryColor,
+  fontFamily: 'Poppins',
   appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(),
   textTheme: const TextTheme(

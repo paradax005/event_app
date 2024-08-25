@@ -8,8 +8,16 @@ abstract class Failure extends Equatable {
 // General failures
 class ServerFailure extends Failure {}
 
-class WrongEmailOrPassword extends Failure {}
+class WrongEmailOrPasswordFailure extends Failure {}
 
 class UserExistFailure extends Failure {}
 
 class ConnexionFailure extends Failure {}
+
+class CacheFailure extends Failure {}
+
+class UserNotFoundFailure extends Failure {}
+
+class InvalidResetCodeFailure extends Failure {}
+
+class ResetCodeNotVerifiedFailure extends Failure {}

@@ -4,6 +4,7 @@ import 'package:event_app/global/theme/theme.dart';
 import 'package:event_app/global/translation/generated/locale_keys.g.dart';
 import 'package:event_app/global/validator/validation.dart';
 import 'package:event_app/global/views/widgets/global_button.dart';
+import 'package:event_app/global/views/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 class LoginUi extends StatelessWidget {
@@ -13,6 +14,7 @@ class LoginUi extends StatelessWidget {
     required this.obscurePassword,
     required this.autoValidate,
     required this.formKey,
+    required this.isLoading,
     super.key,
     this.setVisibility,
     this.login,
@@ -29,6 +31,7 @@ class LoginUi extends StatelessWidget {
   final void Function()? setVisibility;
   final bool autoValidate;
   final GlobalKey formKey;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +64,7 @@ class LoginUi extends StatelessWidget {
                 size: 20,
               ),
               validateData: Validation.validateEmail,
+              isNotEmail: false,
             ),
             const SizedBox(height: 10),
             LoginTextFormBloc(
@@ -85,10 +89,13 @@ class LoginUi extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            GlobalButton(
-              textContent: LocaleKeys.auth_sign_in.tr(),
-              onPressed: login,
-            ),
+            if (isLoading)
+              const LoadingScreen()
+            else
+              GlobalButton(
+                textContent: LocaleKeys.auth_sign_in.tr(),
+                onPressed: login,
+              ),
             const SizedBox(height: 30),
             Row(
               children: [

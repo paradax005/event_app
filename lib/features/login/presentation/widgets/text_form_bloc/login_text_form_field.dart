@@ -13,6 +13,7 @@ class LoginTextForm extends StatelessWidget {
     this.setVisibility,
     this.prefixIcon,
     this.readOnly,
+    this.textInputType,
   });
   final String hint;
   final TextEditingController controller;
@@ -23,6 +24,7 @@ class LoginTextForm extends StatelessWidget {
   final bool? readOnly;
   final VoidCallback? setVisibility;
   final Widget? prefixIcon;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class LoginTextForm extends StatelessWidget {
       decoration: InputDecoration(
         filled: true,
         isDense: true,
-        fillColor: geryInputLoginBackGroundColor,
+        fillColor: Colors.transparent,
         // Background color
         hintText: hint,
         // Placeholder text
@@ -106,8 +108,8 @@ class LoginTextForm extends StatelessWidget {
       validator: validateData,
       obscureText: obscureText,
       readOnly: readOnly ?? false,
-      keyboardType:
-          isNotEmail ? TextInputType.text : TextInputType.emailAddress,
+      keyboardType: textInputType ??
+          (isNotEmail ? TextInputType.text : TextInputType.emailAddress),
       controller: controller,
       textCapitalization: isNotEmail == true
           ? TextCapitalization.words

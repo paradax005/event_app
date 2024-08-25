@@ -7,16 +7,26 @@ abstract class AuthRepository {
     required String password,
   });
 
-  Future<Either<Failure, Unit>> resetPassword({
-    required String email,
-  });
-
   Future<Either<Failure, Unit>> signUp({
     required String email,
     required String password,
     required String username,
     required String firstName,
     required String lastName,
+  });
+
+  Future<Either<Failure, Unit>> requestResetPassword({
+    required String email,
+  });
+
+  Future<Either<Failure, Unit>> confirmResetCode({
+    required String email,
+    required String resetCode,
+  });
+
+  Future<Either<Failure, Unit>> updatePassword({
+    required String email,
+    required String newPassword,
   });
 
   Future<Either<Failure, Unit>> logOut();

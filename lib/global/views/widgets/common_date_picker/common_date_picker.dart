@@ -6,6 +6,7 @@ import 'package:event_app/global/translation/generated/locale_keys.g.dart';
 import 'package:event_app/global/utils/const.dart';
 import 'package:event_app/global/views/widgets/common_date_picker/common_text_form.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CommonDatePicker extends StatefulWidget {
@@ -149,7 +150,9 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
         initialDate: DateTime.now().subtract(
           const Duration(days: 365 * 18),
         ),
-        firstDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(
+          const Duration(days: 365 * 18),
+        ),
         lastDate: DateTime(datePickerEndYearDate),
         builder: (context, child) {
           return Theme(
@@ -164,7 +167,6 @@ class _CommonDatePickerState extends State<CommonDatePicker> {
               ),
               colorScheme: const ColorScheme.light(
                 primary: appPrimaryColor,
-                onPrimary: geryTextLoginInputColor,
                 onSurface: geryTextLoginInputColor, // body text color
               ).copyWith(
                 background: globalBackgroundColor,
