@@ -8,6 +8,8 @@ const titleBlackColor = Color(0xFF020202);
 const descriptionGreyColor = Color(0xFF8A929B);
 const labelBlackColor = Color(0xFF000000);
 const successColor = Color(0xFF4CAF50);
+
+const borderColor = Color(0xFFD7D7D7);
 //Color(0xFF6FCF97);
 
 ///login inputColors

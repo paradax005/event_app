@@ -9,6 +9,9 @@ import 'package:event_app/features/login/domain/usecases/auth_send_reset_code_us
 import 'package:event_app/features/login/domain/usecases/auth_signin_usecase.dart';
 import 'package:event_app/features/login/domain/usecases/auth_signup_usecase.dart';
 import 'package:event_app/features/login/domain/usecases/auth_update_password_use_case.dart';
+import 'package:event_app/features/login/domain/usecases/get_user_info_use_case.dart';
+import 'package:event_app/features/login/domain/usecases/get_user_is_connected_use_case.dart';
+import 'package:event_app/features/login/domain/usecases/logout_user_use_case.dart';
 import 'package:event_app/features/login/presentation/bloc/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +30,9 @@ Future<void> init() async {
         authSendResetCodeUseCase: sl(),
         authConfirmResetCodeUseCase: sl(),
         authUpdatePasswordUseCase: sl(),
+        getUserIsConnectedUseCase: sl(),
+        logoutUserUseCase: sl(),
+        getUserInfoUseCase: sl(),
       ),
     )
 
@@ -53,6 +59,21 @@ Future<void> init() async {
     )
     ..registerLazySingleton(
       () => AuthUpdatePasswordUseCase(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetUserIsConnectedUseCase(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => LogoutUserUseCase(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetUserInfoUseCase(
         repository: sl(),
       ),
     )

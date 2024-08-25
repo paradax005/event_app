@@ -4,6 +4,7 @@ import 'package:event_app/core/errors/failures.dart';
 import 'package:event_app/core/network/network_info.dart';
 import 'package:event_app/features/login/data/data_sources/local_data_source/auth_local_data_source.dart';
 import 'package:event_app/features/login/data/data_sources/remote_data_source/auth_remote_data_source.dart';
+import 'package:event_app/features/login/data/models/user_info.dart';
 import 'package:event_app/features/login/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
@@ -18,26 +19,6 @@ class AuthRepositoryImpl extends AuthRepository {
   final NetworkInfo networkInfo;
 
   @override
-  Future<Either<Failure, String?>> getToken() async {
-    try {
-      final token = await authLocalDataSource.getToken();
-      return Right(token);
-    } on Exception {
-      return Left(CacheFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, Unit>> logOut() async {
-    try {
-      await authLocalDataSource.removeToken();
-      return const Right(unit);
-    } on Exception {
-      return Left(CacheFailure());
-    }
-  }
-
-  @override
   Future<Either<Failure, String>> signIn({
     required String email,
     required String password,
@@ -46,16 +27,19 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(ConnexionFailure());
     }
     try {
-      final token = await authRemoteDataSource.signIn(
+      final response = await authRemoteDataSource.signIn(
         password: password,
         email: email,
       );
-      await authLocalDataSource.saveToken(token: token);
-      return Right(token);
+      final userInfo = userInfoFromJson(response);
+      await authLocalDataSource.saveToken(token: userInfo.token ?? '');
+      await authLocalDataSource.saveRole(role: userInfo.role ?? '');
+      await authLocalDataSource.saveUserId(userId: userInfo.userId ?? '');
+
+      return Right(userInfo.token ?? '');
     } on ServerException {
       return Left(ServerFailure());
     } on WrongCredentialException {
-      print('exception occurred here : WrongCredentialException');
       return Left(WrongEmailOrPasswordFailure());
     }
   }
@@ -153,6 +137,53 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(ResetCodeNotVerifiedFailure());
     } on UserNotFoundException {
       return Left(UserNotFoundFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> isUserConnected() async {
+    try {
+      final token = await authLocalDataSource.getToken();
+      final userId = await authLocalDataSource.getUserId();
+      return Right(
+        (token != null && token.isNotEmpty) &&
+            (userId != null && userId.isNotEmpty),
+      );
+    } on Exception {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> logOut() async {
+    try {
+      await authLocalDataSource.removeToken();
+      await authLocalDataSource.removeRole();
+      await authLocalDataSource.removeUserId();
+      return const Right(unit);
+    } on Exception {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserInfo>> getUserInfo() async {
+    try {
+      final userInfo = await Future.wait([
+        authLocalDataSource.getToken(),
+        authLocalDataSource.getUserId(),
+        authLocalDataSource.getRole(),
+      ]);
+
+      return Right(
+        UserInfo(
+          token: userInfo[0],
+          userId: userInfo[1],
+          role: userInfo[2],
+        ),
+      );
+    } on Exception {
+      return Left(CacheFailure());
     }
   }
 }

@@ -4,7 +4,6 @@ import 'package:event_app/features/login/presentation/bloc/auth_bloc.dart';
 import 'package:event_app/features/login/presentation/widgets/login_ui.dart';
 import 'package:event_app/global/views/gradient_background.dart';
 import 'package:event_app/global/views/widgets/app_snackbar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,26 +74,6 @@ class _LoginScreenState extends State<LoginPage> {
                         goToRegister: () => _navigateToRegister(context),
                         isLoading: state is AuthLoadingState,
                       ),
-                      Positioned(
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                emailController.text = 'aziz.issaoui@esprit.tn';
-                                passwordController.text = 'random-password';
-                              },
-                              icon: const Icon(Icons.filter_list_alt),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                emailController.clear();
-                                passwordController.clear();
-                              },
-                              icon: const Icon(Icons.clear),
-                            ),
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),

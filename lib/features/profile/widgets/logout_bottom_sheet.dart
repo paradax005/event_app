@@ -1,10 +1,13 @@
-import 'package:event_app/core/routes/app_routes.dart';
 import 'package:event_app/global/theme/theme.dart';
 import 'package:event_app/global/views/widgets/global_button.dart';
 import 'package:flutter/material.dart';
 
 class LogoutBottomSheet extends StatelessWidget {
-  const LogoutBottomSheet({super.key});
+  const LogoutBottomSheet({
+    required this.logout,
+    super.key,
+  });
+  final void Function() logout;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +55,7 @@ class LogoutBottomSheet extends StatelessWidget {
                 Expanded(
                   child: GlobalButton(
                     textContent: 'Yes, Logout',
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed(loginPage);
-                    },
+                    onPressed: logout,
                   ),
                 ),
               ],

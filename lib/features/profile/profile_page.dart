@@ -1,9 +1,13 @@
+import 'package:event_app/core/routes/app_routes.dart';
+import 'package:event_app/core/services/injection_container.dart';
+import 'package:event_app/features/login/presentation/bloc/auth_bloc.dart';
 import 'package:event_app/features/profile/widgets/logout_bottom_sheet.dart';
 import 'package:event_app/features/profile/widgets/logout_button.dart';
 import 'package:event_app/features/profile/widgets/personal_details.dart';
 import 'package:event_app/features/profile/widgets/profile_header.dart';
 import 'package:event_app/global/utils/const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -36,40 +40,58 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
+  void logout(BuildContext context) {
+    BlocProvider.of<AuthBloc>(context).add(LogoutUserEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 30,
-              horizontal: 20,
-            ),
-            child: Column(
-              children: [
-                const ProfileHeader(),
-                const SizedBox(height: 30),
-                PersonalDetails(
-                  fullNameController: fullNameController,
-                  emailController: emailController,
-                  phoneNumberController: phoneNumberController,
-                  birthDateController: birthDateController,
+    return BlocProvider(
+      create: (context) => sl<AuthBloc>(),
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is LoggedOutState) {
+            Navigator.of(context).pushReplacementNamed(loginPage);
+          }
+        },
+        builder: (authContext, state) {
+          return Scaffold(
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 30,
+                    horizontal: 20,
+                  ),
+                  child: Column(
+                    children: [
+                      const ProfileHeader(),
+                      const SizedBox(height: 30),
+                      PersonalDetails(
+                        fullNameController: fullNameController,
+                        emailController: emailController,
+                        phoneNumberController: phoneNumberController,
+                        birthDateController: birthDateController,
+                      ),
+                      LogoutButton(
+                        logout: () async {
+                          await showModalBottomSheet<void>(
+                            context: context,
+                            builder: (context) {
+                              return LogoutBottomSheet(
+                                logout: () => logout(authContext),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                LogoutButton(
-                  logout: () async {
-                    await showModalBottomSheet<void>(
-                      context: context,
-                      builder: (context) {
-                        return const LogoutBottomSheet();
-                      },
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

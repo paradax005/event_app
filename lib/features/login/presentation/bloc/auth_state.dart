@@ -49,3 +49,14 @@ class ResetCodeConfirmedLoadingState extends AuthState {}
 class PasswordUpdatedState extends AuthState {}
 
 class PasswordUpdatedLoadingState extends AuthState {}
+
+class LoggedInState extends AuthState {}
+
+class LoggedOutState extends AuthState {}
+
+class GetUserInfoState extends AuthState {
+  GetUserInfoState({
+    required this.userInfo,
+  });
+  final UserInfo userInfo;
+}

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:event_app/core/errors/failures.dart';
+import 'package:event_app/features/login/data/models/user_info.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, String>> signIn({
@@ -31,5 +32,6 @@ abstract class AuthRepository {
 
   Future<Either<Failure, Unit>> logOut();
 
-  Future<Either<Failure, String?>> getToken();
+  Future<Either<Failure, bool>> isUserConnected();
+  Future<Either<Failure, UserInfo>> getUserInfo();
 }

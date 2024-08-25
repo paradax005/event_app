@@ -1,6 +1,9 @@
+import 'package:event_app/core/routes/app_routes.dart';
 import 'package:event_app/global/theme/theme.dart';
 import 'package:event_app/global/utils/const.dart';
+import 'package:event_app/global/utils/media_res.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
@@ -27,16 +30,31 @@ class ProfileHeader extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: InkWell(
-                onTap: () {},
-                child: const Align(
-                  alignment: Alignment.topRight,
-                  child: Icon(
-                    Icons.save,
-                    color: appPrimaryColor,
-                    size: 32,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(supportPage);
+                    },
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: SvgPicture.asset(MediaRes.supportIcon),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  InkWell(
+                    onTap: () {},
+                    child: const Align(
+                      alignment: Alignment.topRight,
+                      child: Icon(
+                        Icons.save,
+                        color: appPrimaryColor,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
