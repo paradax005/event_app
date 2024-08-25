@@ -1,3 +1,4 @@
+import 'package:event_app/features/forgot-password/presentation/forgot_password_screen.dart';
 import 'package:event_app/features/home_tab/home_tab.dart';
 import 'package:event_app/features/login/presentation/login_page.dart';
 import 'package:event_app/features/register/presentation/register_page.dart';
@@ -27,6 +28,11 @@ Route<dynamic> controller(RouteSettings settings) {
     case homePage:
       return _pageBuilder(
         (_) => const MainScreen(),
+        settings: settings,
+      );
+    case forgotPassword:
+      return _pageBuilder(
+        (_) => const ForgotPasswordScreen(),
         settings: settings,
       );
     default:

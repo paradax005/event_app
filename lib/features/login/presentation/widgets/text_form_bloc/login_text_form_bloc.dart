@@ -16,6 +16,7 @@ class LoginTextFormBloc extends StatelessWidget {
     this.prefixIcon,
     super.key,
     this.readOnly,
+    this.textInputType,
   });
 
   final String hint;
@@ -28,6 +29,7 @@ class LoginTextFormBloc extends StatelessWidget {
   final bool? readOnly;
   final VoidCallback? setVisibility;
   final Widget? prefixIcon;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class LoginTextFormBloc extends StatelessWidget {
             setVisibility: setVisibility,
             prefixIcon: prefixIcon,
             readOnly: readOnly,
+            textInputType: textInputType,
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:event_app/features/login/presentation/widgets/text_form_bloc/login_text_form_bloc.dart';
 import 'package:event_app/global/translation/generated/locale_keys.g.dart';
 import 'package:event_app/global/views/widgets/global_button.dart';
+import 'package:event_app/global/views/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationSecondSection extends StatelessWidget {
@@ -13,6 +14,7 @@ class RegistrationSecondSection extends StatelessWidget {
     required this.autoValidate,
     required this.showPassword,
     required this.showConfirmPassword,
+    required this.isLoading,
     super.key,
     this.setVisibility,
   });
@@ -27,6 +29,8 @@ class RegistrationSecondSection extends StatelessWidget {
   final Function confirmButton;
   final GlobalKey formKey;
   final bool autoValidate;
+
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +63,13 @@ class RegistrationSecondSection extends StatelessWidget {
               },
             ),
             const SizedBox(height: 20),
-            GlobalButton(
-              textContent: LocaleKeys.finish.tr(),
-              onPressed: () => confirmButton,
-            ),
+            if (isLoading)
+              const LoadingScreen()
+            else
+              GlobalButton(
+                textContent: LocaleKeys.finish.tr(),
+                onPressed: () => confirmButton(),
+              ),
           ],
         ),
       ),
