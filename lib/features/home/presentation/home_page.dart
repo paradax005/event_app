@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final latestEvent = EventSeeders.eventList();
+  final latestEvent = EventSeeders.generateRandomEvents();
 
   @override
   Widget build(BuildContext context) {

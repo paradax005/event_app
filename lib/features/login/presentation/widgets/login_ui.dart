@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:event_app/features/login/google_sigin_api.dart';
 import 'package:event_app/features/login/presentation/widgets/text_form_bloc/login_text_form_bloc.dart';
 import 'package:event_app/global/theme/theme.dart';
 import 'package:event_app/global/translation/generated/locale_keys.g.dart';
@@ -112,6 +113,12 @@ class LoginUi extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            const ElevatedButton(
+              onPressed: GoogleSignInApi.login,
+              child: Text(
+                'Sign In with google',
+              ),
             ),
           ],
         ),

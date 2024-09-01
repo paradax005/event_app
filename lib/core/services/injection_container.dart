@@ -1,5 +1,10 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:event_app/core/network/network_info.dart';
+import 'package:event_app/features/event/data/datasources/remote_data_source/event_remote_data_source.dart';
+import 'package:event_app/features/event/data/repository/event_repository_impl.dart';
+import 'package:event_app/features/event/domain/repository/event_repository.dart';
+import 'package:event_app/features/event/domain/usecases/create_event_usecase.dart';
+import 'package:event_app/features/event/presentation/bloc/event_bloc.dart';
 import 'package:event_app/features/login/data/data_sources/local_data_source/auth_local_data_source.dart';
 import 'package:event_app/features/login/data/data_sources/remote_data_source/auth_remote_data_source.dart';
 import 'package:event_app/features/login/data/repository/auth_repository_impl.dart';
@@ -14,15 +19,38 @@ import 'package:event_app/features/login/domain/usecases/get_user_is_connected_u
 import 'package:event_app/features/login/domain/usecases/logout_user_use_case.dart';
 import 'package:event_app/features/login/presentation/bloc/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //*-------------------- Authentication module   --------------------
-  // register bloc
+  //*-------------------- Event module   --------------------
   sl
+    ..registerFactory(
+      () => EventBloc(
+        createEventUseCase: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => CreateEventUseCase(repository: sl()),
+    )
+    ..registerLazySingleton<EventRepository>(
+      () => EventRepositoryImpl(
+        eventRemoteDataSource: sl(),
+        authLocalDataSource: sl(),
+        networkInfo: sl(),
+      ),
+    )
+    ..registerLazySingleton<EventRemoteDataSource>(
+      () => EventRemoteDataSourceImpl(
+        client: sl(),
+      ),
+    )
+    //*-------------------- Authentication module   --------------------
+    // register bloc
+
     ..registerFactory(
       () => AuthBloc(
         authSignInUseCase: sl(),
@@ -89,6 +117,7 @@ Future<void> init() async {
     ..registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(
         client: sl(),
+        googleSignIn: sl(),
       ),
     )
     ..registerLazySingleton<AuthLocalDataSource>(
@@ -105,6 +134,7 @@ Future<void> init() async {
   sl
     ..registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()))
     ..registerLazySingleton(http.Client.new)
+    ..registerLazySingleton(GoogleSignIn.new)
     ..registerLazySingleton(() => sharedPreferences)
     ..registerLazySingleton(Connectivity.new);
 }

@@ -3,9 +3,14 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:event_app/core/errors/exceptions.dart';
 import 'package:event_app/global/utils/app_api.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
 abstract class AuthRemoteDataSource {
+  Future<GoogleSignInAccount?> signInWithGoogle();
+
+  Future<void> googleSignOut();
+
   Future<Unit> signUp({
     required String email,
     required String password,
@@ -36,9 +41,13 @@ abstract class AuthRemoteDataSource {
 
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({
-    required this.client,
-  });
-  final http.Client client;
+    required http.Client client,
+    required GoogleSignIn googleSignIn,
+  })  : _client = client,
+        _googleSignIn = googleSignIn;
+
+  final http.Client _client;
+  final GoogleSignIn _googleSignIn;
 
   @override
   Future<String> signIn({
@@ -49,7 +58,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       'email': email,
       'password': password,
     };
-    final response = await client
+    final response = await _client
         .post(
           Uri.parse(loginUrl),
           headers: {'Content-Type': 'application/json'},
@@ -84,8 +93,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       'lastName': lastName,
     };
 
-    print(requestBody);
-    final response = await client
+    final response = await _client
         .post(
           Uri.parse(signUpUrl),
           headers: {'Content-Type': 'application/json'},
@@ -94,8 +102,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         .catchError(
           (e) => throw ServerException(),
         );
-
-    print(response.body);
 
     if (response.statusCode == 201) {
       return unit;
@@ -113,7 +119,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final requestBody = <String, dynamic>{
       'email': email,
     };
-    final response = await client
+    final response = await _client
         .post(
           Uri.parse(forgotPasswordUrl),
           headers: {'Content-Type': 'application/json'},
@@ -141,7 +147,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       'email': email,
       'resetCode': resetCode,
     };
-    final response = await client
+    final response = await _client
         .post(
           Uri.parse(verifyResetCodedUrl),
           headers: {'Content-Type': 'application/json'},
@@ -171,7 +177,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       'email': email,
       'newPassword': newPassword,
     };
-    final response = await client
+    final response = await _client
         .put(
           Uri.parse(resetPasswordUrl),
           headers: {'Content-Type': 'application/json'},
@@ -190,5 +196,26 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     } else {
       throw ServerException();
     }
+  }
+
+  @override
+  Future<GoogleSignInAccount?> signInWithGoogle() async {
+    final user = await _googleSignIn.signIn();
+    if (user != null) {
+      await signUp(
+        email: user.email,
+        password: 'password',
+        username: user.displayName ?? '',
+        firstName: user.displayName ?? '',
+        lastName: user.displayName ?? '',
+      );
+
+      await signIn(email: user.email, password: 'password');
+    }
+  }
+
+  @override
+  Future<void> googleSignOut() async {
+    await _googleSignIn.disconnect();
   }
 }

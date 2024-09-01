@@ -3,6 +3,8 @@ import 'package:event_app/core/errors/failures.dart';
 import 'package:event_app/features/login/data/models/user_info.dart';
 
 abstract class AuthRepository {
+  Future<Either<Failure, Unit>> signInWithGoogle();
+
   Future<Either<Failure, String>> signIn({
     required String email,
     required String password,

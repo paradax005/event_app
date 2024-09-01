@@ -1,5 +1,5 @@
 import 'package:event_app/core/routes/app_routes.dart';
-import 'package:event_app/features/home/data/models/event_model.dart';
+import 'package:event_app/features/event/data/models/event_model.dart';
 import 'package:event_app/features/home/presentation/widgets/event_card.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,11 @@ class EventListView extends StatelessWidget {
           return EventCard(
             eventModel: eventList[index],
             buyTicket: () {
-              Navigator.pushNamed(context, eventPage);
+              Navigator.pushNamed(
+                context,
+                eventPage,
+                arguments: eventList[index],
+              );
             },
           );
         },
