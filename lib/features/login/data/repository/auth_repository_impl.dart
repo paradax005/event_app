@@ -160,6 +160,7 @@ class AuthRepositoryImpl extends AuthRepository {
       await authLocalDataSource.removeToken();
       await authLocalDataSource.removeRole();
       await authLocalDataSource.removeUserId();
+      await authRemoteDataSource.googleSignOut();
       return const Right(unit);
     } on Exception {
       return Left(CacheFailure());
@@ -185,5 +186,11 @@ class AuthRepositoryImpl extends AuthRepository {
     } on Exception {
       return Left(CacheFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> signInWithGoogle() {
+    // TODO: implement signInWithGoogle
+    throw UnimplementedError();
   }
 }

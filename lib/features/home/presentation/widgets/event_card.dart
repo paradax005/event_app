@@ -1,7 +1,6 @@
-import 'package:event_app/features/home/data/models/event_model.dart';
+import 'package:event_app/features/event/data/models/event_model.dart';
 import 'package:event_app/global/theme/theme.dart';
 import 'package:event_app/global/views/widgets/global_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
@@ -33,7 +32,7 @@ class EventCard extends StatelessWidget {
                 ),
               ),
               child: Image.network(
-                eventModel.thumbImage,
+                eventModel.eventCover ?? '',
                 height: 127,
                 fit: BoxFit.fitWidth,
               ),
@@ -44,7 +43,7 @@ class EventCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  eventModel.name,
+                  eventModel.name ?? '',
                   style: theme.textTheme.displayMedium,
                 ),
               ),
@@ -53,9 +52,9 @@ class EventCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(eventModel.location),
-                Text(eventModel.date),
-                Text(eventModel.numberTicket),
+                Text(eventModel.location ?? ''),
+                Text(eventModel.date ?? ''),
+                Text(eventModel.availableTickets.toString()),
               ],
             ),
             const SizedBox(height: 12),

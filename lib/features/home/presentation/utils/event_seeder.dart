@@ -1,25 +1,35 @@
-import 'package:event_app/features/home/data/models/event_model.dart';
+import 'dart:math';
+
+import 'package:event_app/features/event/data/models/event_model.dart';
 import 'package:event_app/global/utils/const.dart';
+import 'package:faker/faker.dart';
 
 abstract class EventSeeders {
   const EventSeeders._();
 
-  static List<EventModel> eventList({
-    int length = 5,
+  static // Function to generate a random list of EventModel
+      List<EventModel> generateRandomEvents({
+    int count = 5,
   }) {
-    return List.generate(
-      length,
-      (index) => const EventModel(
-        name: eventName,
-        location: eventLocation,
-        date: eventDate,
-        numberTicket: ticketNumber,
-        thumbImage: eventThumbnail,
-        description: 'description',
-        creatorName: 'creatorName',
-        creatorLogo: 'creatorLogo',
-        isVerified: true,
-      ),
-    );
+    final faker = Faker();
+    final random = Random();
+
+    return List.generate(count, (index) {
+      return EventModel(
+        user: faker.person.name(),
+        name: faker.lorem.words(3).join(' '),
+        date: DateTime.now()
+            .add(Duration(days: random.nextInt(30)))
+            .toIso8601String(),
+        location: faker.address.city(),
+        price: faker.randomGenerator.decimal(min: 10),
+        availableTickets: faker.randomGenerator.integer(100, min: 1),
+        description: faker.lorem.sentence(),
+        eventCover: 'https://via.placeholder.com/150', // Placeholder image URL
+        id: faker.guid.guid(),
+        createdAt: DateTime.now().subtract(Duration(days: random.nextInt(10))),
+        updatedAt: DateTime.now(),
+      );
+    });
   }
 }

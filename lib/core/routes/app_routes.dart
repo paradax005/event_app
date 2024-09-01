@@ -1,4 +1,6 @@
+import 'package:event_app/features/event/data/models/event_model.dart';
 import 'package:event_app/features/event/presentation/add_new_event/add_new_event_page.dart';
+import 'package:event_app/features/event/presentation/event_details/event_details_page.dart';
 import 'package:event_app/features/forgot-password/presentation/forgot_password_screen.dart';
 import 'package:event_app/features/home_tab/home_tab.dart';
 import 'package:event_app/features/login/data/models/user_info.dart';
@@ -11,12 +13,12 @@ import 'package:flutter/material.dart';
 
 const String splashScreen = '/';
 const String loginPage = '/login';
-const String registerPage = 'register';
-const String forgotPassword = 'forgot-password';
+const String registerPage = '/register';
+const String forgotPassword = '/forgot-password';
 const String homePage = '/homePage';
-const String eventPage = 'eventPage';
-const String addEventPage = 'add-eventPage';
-const String supportPage = 'supportPage';
+const String eventPage = '/eventPage';
+const String addEventPage = '/add-eventPage';
+const String supportPage = '/supportPage';
 
 // controller function with switch statement to control page route flow
 Route<dynamic> controller(RouteSettings settings) {
@@ -54,6 +56,14 @@ Route<dynamic> controller(RouteSettings settings) {
     case addEventPage:
       return _pageBuilder(
         (_) => const AddNewEventPage(),
+        settings: settings,
+      );
+    case eventPage:
+      final arguments = settings.arguments! as EventModel;
+      return _pageBuilder(
+        (_) => EventDetailsPage(
+          eventModel: arguments,
+        ),
         settings: settings,
       );
     default:

@@ -9,6 +9,7 @@ class EventModel {
     required this.creatorName,
     required this.creatorLogo,
     required this.isVerified,
+    required this.price,
   });
 
   final String name;
@@ -17,6 +18,7 @@ class EventModel {
   final String numberTicket;
   final String thumbImage;
   final String description;
+  final String price;
 
   // Event Creator
   final String creatorName;

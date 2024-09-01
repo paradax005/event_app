@@ -11,6 +11,14 @@ abstract class Validation {
     return null;
   }
 
+  static String? validateText(String? value) {
+    if ((value ?? '').isEmpty) {
+      return '';
+    }
+
+    return null;
+  }
+
   static bool _isValidEmail(String value) {
     final emailRegex = RegExp(
       r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
