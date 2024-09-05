@@ -50,7 +50,8 @@ class _SplashScreenState extends State<SplashScreen>
   }) {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacementNamed(
-        isUserConnected ? homePage : loginPage,
+        onBoardingScreen,
+        //isUserConnected ? homePage : loginPage,
       );
     });
   }
@@ -72,28 +73,24 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildSlidingText(theme),
+            AnimatedBuilder(
+              builder: (context, _) {
+                return SlideTransition(
+                  position: slidingAnimation,
+                  child: Text(
+                    'Event App',
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.displayLarge?.copyWith(
+                      color: globalBackgroundColor,
+                    ),
+                  ),
+                );
+              },
+              animation: slidingAnimation,
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildSlidingText(ThemeData theme) {
-    return AnimatedBuilder(
-      builder: (context, _) {
-        return SlideTransition(
-          position: slidingAnimation,
-          child: Text(
-            'Event App',
-            textAlign: TextAlign.center,
-            style: theme.textTheme.displayLarge?.copyWith(
-              color: globalBackgroundColor,
-            ),
-          ),
-        );
-      },
-      animation: slidingAnimation,
     );
   }
 }

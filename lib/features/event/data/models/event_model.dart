@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
+import 'package:event_app/global/utils/functions.dart';
+
 EventModel eventModelFromJson(String str) => EventModel.fromJson(
       json.decode(str) as Map<String, dynamic>,
     );
@@ -7,25 +10,8 @@ EventModel eventModelFromJson(String str) => EventModel.fromJson(
 String eventModelToJson(EventModel data) => json.encode(data.toJson());
 
 class EventModel {
-  factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
-        user: json['user'] as String?,
-        name: json['name'] as String?,
-        date: json['date'] as String?,
-        location: json['location'] as String?,
-        price: json['price'] as double?,
-        availableTickets: json['availableTickets'] as int?,
-        description: json['description'] as String?,
-        eventCover: json['eventCover'] as String?,
-        id: json['_id'] as String?,
-        createdAt: json['createdAt'] == null
-            ? null
-            : DateTime.parse(json['createdAt'] as String),
-        updatedAt: json['updatedAt'] == null
-            ? null
-            : DateTime.parse(json['updatedAt'] as String),
-      );
-
   EventModel({
+    this.id,
     this.user,
     this.name,
     this.date,
@@ -34,10 +20,26 @@ class EventModel {
     this.availableTickets,
     this.description,
     this.eventCover,
-    this.id,
-    this.createdAt,
-    this.updatedAt,
   });
+
+  factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
+        id: json['_id'] as String?,
+        user: json['user'] as String?,
+        name: json['name'] as String?,
+        date:
+            json['date'] == null ? null : formatIsoDate(json['date'] as String),
+        location: json['location'] as String?,
+        price: json['price'] != null
+            ? double.tryParse(json['price'].toString())
+            : null,
+        availableTickets: json['availableTickets'] != null
+            ? int.tryParse(json['availableTickets'].toString())
+            : null,
+        description: json['description'] as String?,
+        eventCover: replaceLocalhost((json['eventCover'] as String?) ?? ''),
+      );
+
+  final String? id;
   final String? user;
   final String? name;
   final String? date;
@@ -46,20 +48,25 @@ class EventModel {
   final int? availableTickets;
   final String? description;
   final String? eventCover;
-  final String? id;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() => {
+        '_id': id,
         'user': user,
         'name': name,
+        'date': date,
         'location': location,
         'price': price,
         'availableTickets': availableTickets,
         'description': description,
         'eventCover': eventCover,
-        '_id': id,
-        'createdAt': createdAt?.toIso8601String(),
-        'updatedAt': updatedAt?.toIso8601String(),
       };
+
+  DateTime getDate() {
+    final dateFormat = DateFormat('dd-MM-yyyy');
+    return dateFormat.parse(date ?? '');
+  }
+}
+
+String replaceLocalhost(String url) {
+  return url.replaceAll('localhost', '10.0.2.2');
 }

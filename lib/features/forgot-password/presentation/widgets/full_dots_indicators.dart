@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 class FullDotsIndicators extends StatelessWidget {
   const FullDotsIndicators({
     required this.index,
+    this.activeColor = successColor,
+    this.width = 55,
+    this.height = 10,
     super.key,
   });
   final int index;
+  final Color? activeColor;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +21,19 @@ class FullDotsIndicators extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         DotsIndicator(
-          color: index == 0 ? successColor : geryHintLoginInputColor,
+          color: index == 0 ? activeColor : geryHintLoginInputColor,
+          height: height,
+          width: width,
         ),
         DotsIndicator(
-          color: index == 1 ? successColor : geryHintLoginInputColor,
+          color: index == 1 ? activeColor : geryHintLoginInputColor,
+          height: height,
+          width: width,
         ),
         DotsIndicator(
-          color: index == 2 ? successColor : geryHintLoginInputColor,
+          color: index == 2 ? activeColor : geryHintLoginInputColor,
+          height: height,
+          width: width,
         ),
       ],
     );

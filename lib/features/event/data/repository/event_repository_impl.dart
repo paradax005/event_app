@@ -5,19 +5,24 @@ import 'package:event_app/core/errors/exceptions.dart';
 import 'package:event_app/core/errors/failures.dart';
 import 'package:event_app/core/network/network_info.dart';
 import 'package:event_app/features/event/data/datasources/remote_data_source/event_remote_data_source.dart';
+import 'package:event_app/features/event/data/models/event_model.dart';
+import 'package:event_app/features/event/data/models/purchase_model.dart';
 import 'package:event_app/features/event/domain/repository/event_repository.dart';
 import 'package:event_app/features/login/data/data_sources/local_data_source/auth_local_data_source.dart';
 
 class EventRepositoryImpl implements EventRepository {
   EventRepositoryImpl({
-    required this.eventRemoteDataSource,
-    required this.authLocalDataSource,
-    required this.networkInfo,
-  });
+    required EventRemoteDataSource eventRemoteDataSource,
+    required AuthLocalDataSource authLocalDataSource,
+    required NetworkInfo networkInfo,
+  })  : _eventRemoteDataSource = eventRemoteDataSource,
+        _authLocalDataSource = authLocalDataSource,
+        _networkInfo = networkInfo;
 
-  final EventRemoteDataSource eventRemoteDataSource;
-  final AuthLocalDataSource authLocalDataSource;
-  final NetworkInfo networkInfo;
+  final EventRemoteDataSource _eventRemoteDataSource;
+  final AuthLocalDataSource _authLocalDataSource;
+  final NetworkInfo _networkInfo;
+
   @override
   Future<Either<Failure, Unit>> createEvent({
     required String eventName,
@@ -28,14 +33,13 @@ class EventRepositoryImpl implements EventRepository {
     required String eventDescription,
     File? eventImage,
   }) async {
-    if (await networkInfo.isConnected == false) {
+    if (await _networkInfo.isConnected == false) {
       return Left(ConnexionFailure());
     }
     try {
-      final userId = await authLocalDataSource.getUserId();
+      final userId = await _authLocalDataSource.getUserId();
       if (userId != null) {
-        print('userId : $userId');
-        final response = await eventRemoteDataSource.createEvent(
+        await _eventRemoteDataSource.createEvent(
           userId: userId,
           eventName: eventName,
           eventDate: eventDate,
@@ -46,9 +50,70 @@ class EventRepositoryImpl implements EventRepository {
           eventImage: eventImage,
         );
 
-        print('returning the response');
+        return const Right(unit);
+      }
+
+      return Left(WrongEmailOrPasswordFailure());
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<EventModel>>> getAllEvents() async {
+    if (await _networkInfo.isConnected == false) {
+      return Left(ConnexionFailure());
+    }
+    try {
+      final eventList = await _eventRemoteDataSource.getAllEvents();
+
+      return Right(eventList);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> makeEventPurchase({
+    required String eventId,
+    required int nbrTickets,
+  }) async {
+    if (await _networkInfo.isConnected == false) {
+      return Left(ConnexionFailure());
+    }
+
+    try {
+      final userId = await _authLocalDataSource.getUserId();
+      if (userId != null) {
+        await _eventRemoteDataSource.makeEventPurchase(
+          eventId: eventId,
+          userId: userId,
+          nbrTickets: nbrTickets,
+        );
 
         return const Right(unit);
+      }
+
+      return Left(WrongEmailOrPasswordFailure());
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PurchaseModel>>> getEventHistory() async {
+    if (await _networkInfo.isConnected == false) {
+      return Left(ConnexionFailure());
+    }
+
+    try {
+      final userId = await _authLocalDataSource.getUserId();
+      if (userId != null) {
+        final historyEvent = await _eventRemoteDataSource.getPurchasesByUser(
+          userId: userId,
+        );
+
+        return Right(historyEvent);
       }
 
       return Left(WrongEmailOrPasswordFailure());

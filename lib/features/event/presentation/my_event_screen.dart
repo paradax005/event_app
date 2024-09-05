@@ -1,10 +1,8 @@
 import 'package:event_app/core/routes/app_routes.dart';
 import 'package:event_app/features/event/presentation/tabs/event_tab.dart';
 import 'package:event_app/global/theme/theme.dart';
-import 'package:event_app/global/utils/media_res.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MyEventScreen extends StatefulWidget {
   const MyEventScreen({super.key});

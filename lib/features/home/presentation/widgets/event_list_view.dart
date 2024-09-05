@@ -14,7 +14,7 @@ class EventListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 260,
+      height: 280,
       child: ListView.separated(
         padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
