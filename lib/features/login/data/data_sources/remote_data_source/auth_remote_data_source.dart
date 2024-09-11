@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
@@ -211,7 +212,10 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       );
 
       await signIn(email: user.email, password: 'password');
+
+      return user;
     }
+    return null;
   }
 
   @override

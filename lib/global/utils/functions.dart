@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event_app/core/errors/failures.dart';
 
 String mapFailureToString(Failure failure) {
@@ -21,4 +22,11 @@ String mapFailureToString(Failure failure) {
     return 'An unexpected error occurred. Please try again later or contact '
         'support for assistance.';
   }
+}
+
+String formatIsoDate(String isStringDate) {
+  final dateTime = DateTime.parse(isStringDate);
+
+  final formatter = DateFormat('dd-MM-yyyy');
+  return formatter.format(dateTime.toLocal());
 }

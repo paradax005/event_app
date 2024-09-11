@@ -17,3 +17,19 @@ class EventFailure extends EventState {
 }
 
 class EventCreatedSuccessfully extends EventState {}
+
+class EventPurchasedSuccessfully extends EventState {}
+
+class EventListLoaded extends EventState {
+  EventListLoaded({
+    required this.eventsList,
+  });
+  final List<EventModel> eventsList;
+}
+
+class EventHistoryListLoaded extends EventState {
+  EventHistoryListLoaded({
+    required this.purchaseList,
+  });
+  final List<PurchaseModel> purchaseList;
+}

@@ -3,8 +3,9 @@ import 'package:event_app/features/event/presentation/add_new_event/add_new_even
 import 'package:event_app/features/event/presentation/event_details/event_details_page.dart';
 import 'package:event_app/features/forgot-password/presentation/forgot_password_screen.dart';
 import 'package:event_app/features/home_tab/home_tab.dart';
-import 'package:event_app/features/login/data/models/user_info.dart';
 import 'package:event_app/features/login/presentation/login_page.dart';
+import 'package:event_app/features/on_boarding/presentation/on_boarding_screen.dart';
+import 'package:event_app/features/payment/presentation/widgets/payment_sccess.dart';
 import 'package:event_app/features/register/presentation/register_page.dart';
 import 'package:event_app/features/splash/presentation/splash_screen.dart';
 import 'package:event_app/features/support/pressentation/support_screen.dart';
@@ -12,6 +13,7 @@ import 'package:event_app/global/views/page_under_construction.dart';
 import 'package:flutter/material.dart';
 
 const String splashScreen = '/';
+const String onBoardingScreen = '/onBoardingScreen';
 const String loginPage = '/login';
 const String registerPage = '/register';
 const String forgotPassword = '/forgot-password';
@@ -19,6 +21,7 @@ const String homePage = '/homePage';
 const String eventPage = '/eventPage';
 const String addEventPage = '/add-eventPage';
 const String supportPage = '/supportPage';
+const String paymentSuccessPage = '/paymentSuccessPage';
 
 // controller function with switch statement to control page route flow
 Route<dynamic> controller(RouteSettings settings) {
@@ -26,6 +29,11 @@ Route<dynamic> controller(RouteSettings settings) {
     case splashScreen:
       return _pageBuilder(
         (_) => const SplashScreen(),
+        settings: settings,
+      );
+    case onBoardingScreen:
+      return _pageBuilder(
+        (_) => const OnBoardingScreen(),
         settings: settings,
       );
     case loginPage:
@@ -64,6 +72,11 @@ Route<dynamic> controller(RouteSettings settings) {
         (_) => EventDetailsPage(
           eventModel: arguments,
         ),
+        settings: settings,
+      );
+    case paymentSuccessPage:
+      return _pageBuilder(
+        (_) => const PaymentSuccessfulScreen(),
         settings: settings,
       );
     default:

@@ -8,6 +8,7 @@ const email = 'aziz.issaoui@gmail.com';
 const phoneNumber = '+216 29 033 385';
 const birthDate = '18/08/1996';
 
+const appCurrency = '€';
 //date
 const datePickerStartYearDate = 1920;
 const datePickerEndYearDate = 2050;
@@ -20,3 +21,9 @@ const eventThumbnail =
 const eventLocation = 'Tunis, Tunisia';
 const eventDate = '30 Aug, 2024';
 const ticketNumber = '150 Tickets';
+
+const stripePublishableLiveKey =
+    'pk_test_51P9ljL2LonM9SDgsxfx8n0twRIQJhY7PrcnUtd4czmrsGvKrZc8vWyYBtHMYlYH3reslpjiSN4UiHyEZuSWnUHRR00NCZzXF2Z';
+
+const stripePrivateLiveKey =
+    'sk_test_51P9ljL2LonM9SDgsg4cu5rUsz3myicqjZj6VOVixLVUqB6blyae8fHLlFIPDCIjVV9CT1IEH4G8ufmQZuGXCVJpw00tnXISZtK';

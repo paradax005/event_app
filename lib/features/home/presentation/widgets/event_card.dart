@@ -1,6 +1,8 @@
 import 'package:event_app/features/event/data/models/event_model.dart';
 import 'package:event_app/global/theme/theme.dart';
+import 'package:event_app/global/utils/const.dart';
 import 'package:event_app/global/views/widgets/global_button.dart';
+import 'package:event_app/global/views/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
@@ -17,9 +19,10 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return SizedBox(
-      height: 268,
-      width: 290,
+      width: 320,
       child: Card(
+        elevation: 4,
+        color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -31,10 +34,10 @@ class EventCard extends StatelessWidget {
                   topRight: Radius.circular(12),
                 ),
               ),
-              child: Image.network(
-                eventModel.eventCover ?? '',
-                height: 127,
-                fit: BoxFit.fitWidth,
+              child: ImageNetworkWidget(
+                imageUrl: eventModel.eventCover ?? '',
+                height: 150,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 7),
@@ -44,26 +47,39 @@ class EventCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
                   eventModel.name ?? '',
-                  style: theme.textTheme.displayMedium,
+                  style: theme.textTheme.displayMedium?.copyWith(
+                    fontSize: 16,
+                  ),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
                 ),
               ),
             ),
             const SizedBox(height: 12),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(eventModel.location ?? ''),
-                Text(eventModel.date ?? ''),
-                Text(eventModel.availableTickets.toString()),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(eventModel.location ?? ''),
+                ),
+                Expanded(
+                  child: Text(eventModel.date ?? ''),
+                ),
+                Expanded(
+                  child: Text(
+                    '${eventModel.availableTickets} Tickets',
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 12),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
                 children: [
                   Text(
-                    '29 TND',
+                    '${eventModel.price} $appCurrency',
                     style: theme.textTheme.displayMedium
                         ?.copyWith(color: successColor),
                   ),
